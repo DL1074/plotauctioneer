@@ -1,6 +1,7 @@
 package com.plotauction.commands;
 
 import com.plotauction.PlotAuctionPlugin;
+import com.plotauction.managers.ConfigManager;
 import com.plotauction.models.PlayerSelection;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -27,8 +28,8 @@ public class ShopCommand implements CommandExecutor {
         Player player = (Player) sender;
         
         if (args.length == 0) {
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&6Shop Commands:");
-            player.sendMessage("&e/plotshop create <name> &7- Create a shop");
+            player.sendMessage(plugin.getConfigManager().formatMessage("&6Shop Commands:"));
+            player.sendMessage(ConfigManager.translateColorCodes("&e/plotshop create <name> &7- Create a shop"));
             return true;
         }
         
@@ -39,13 +40,13 @@ public class ShopCommand implements CommandExecutor {
             }
             
             if (args.length < 2) {
-                player.sendMessage(plugin.getConfigManager().getPrefix() + "&cUsage: /plotshop create <name>");
+                player.sendMessage(plugin.getConfigManager().formatMessage("&cUsage: /plotshop create <name>"));
                 return true;
             }
             
             PlayerSelection selection = plugin.getSelectionManager().getSelection(player);
             if (selection == null || !selection.isComplete()) {
-                player.sendMessage(plugin.getConfigManager().getPrefix() + "&cYou must make a selection first!");
+                player.sendMessage(plugin.getConfigManager().formatMessage("&cYou must make a selection first!"));
                 return true;
             }
             
@@ -61,8 +62,8 @@ public class ShopCommand implements CommandExecutor {
             plugin.getSelectionManager().clearSelection(player.getUniqueId());
             removeSelectionAxe(player);
             
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&aShop block created!");
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&7Place the block and enter a price in chat.");
+            player.sendMessage(plugin.getConfigManager().formatMessage("&aShop block created!"));
+            player.sendMessage(plugin.getConfigManager().formatMessage("&7Place the block and enter a price in chat."));
             
             return true;
         }

@@ -39,7 +39,7 @@ public class ShopBlockPlaceListener implements Listener {
         
         PendingShop pending = plugin.getShopManager().getPendingShop(player.getUniqueId());
         if (pending == null) {
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&cNo pending shop found!");
+            player.sendMessage(plugin.getConfigManager().formatMessage("&cNo pending shop found!"));
             event.setCancelled(true);
             return;
         }
@@ -58,8 +58,8 @@ public class ShopBlockPlaceListener implements Listener {
             
             pending.setBlockPlaced(block.getLocation());
             
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&aShop block placed!");
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&7Enter the price in chat (numbers only)");
+            player.sendMessage(plugin.getConfigManager().formatMessage("&aShop block placed!"));
+            player.sendMessage(plugin.getConfigManager().formatMessage("&7Enter the price in chat (numbers only)"));
         });
     }
     

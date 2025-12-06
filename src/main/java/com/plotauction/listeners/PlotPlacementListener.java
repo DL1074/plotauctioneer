@@ -44,18 +44,18 @@ public class PlotPlacementListener implements Listener {
         
         UUID schematicId = plugin.getItemManager().getSchematicId(item);
         if (schematicId == null) {
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&cInvalid plot item!");
+            player.sendMessage(plugin.getConfigManager().formatMessage("&cInvalid plot item!"));
             return;
         }
         
         if (!plugin.getSchematicManager().schematicExists(schematicId)) {
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&cSchematic file not found!");
+            player.sendMessage(plugin.getConfigManager().formatMessage("&cSchematic file not found!"));
             return;
         }
         
         PlotData plotData = plugin.getItemManager().getPlotData(item);
         if (plotData == null) {
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&cInvalid plot data!");
+            player.sendMessage(plugin.getConfigManager().formatMessage("&cInvalid plot data!"));
             return;
         }
         
@@ -78,11 +78,11 @@ public class PlotPlacementListener implements Listener {
         
         plugin.getPreviewManager().createPreview(preview);
         
-        player.sendMessage(plugin.getConfigManager().getPrefix() + "&aPlacement preview created!");
-        player.sendMessage(plugin.getConfigManager().getPrefix() + "&7Size: &e" + plotData.getDimensionX() + "x" + 
+        player.sendMessage(plugin.getConfigManager().formatMessage("&aPlacement preview created!"));
+        player.sendMessage(plugin.getConfigManager().formatMessage("&7Size: &e") + plotData.getDimensionX() + "x" + 
             plotData.getDimensionY() + "x" + plotData.getDimensionZ());
-        player.sendMessage(plugin.getConfigManager().getPrefix() + "&7Location: &e" + 
+        player.sendMessage(plugin.getConfigManager().formatMessage("&7Location: &e") + 
             placementLocation.getBlockX() + ", " + placementLocation.getBlockY() + ", " + placementLocation.getBlockZ());
-        player.sendMessage(plugin.getConfigManager().getPrefix() + "&e/plotconfirm &7to place or &e/plotcancel &7to cancel");
+        player.sendMessage(plugin.getConfigManager().formatMessage("&e/plotconfirm &7to place or &e/plotcancel &7to cancel"));
     }
 }

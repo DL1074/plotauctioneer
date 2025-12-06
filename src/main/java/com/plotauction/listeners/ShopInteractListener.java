@@ -49,7 +49,7 @@ public class ShopInteractListener implements Listener {
         Player player = event.getPlayer();
         
         if (!plugin.getEconomyManager().isEnabled()) {
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&cEconomy is not enabled!");
+            player.sendMessage(plugin.getConfigManager().formatMessage("&cEconomy is not enabled!"));
             return;
         }
         
@@ -62,14 +62,14 @@ public class ShopInteractListener implements Listener {
         }
         
         if (player.getInventory().firstEmpty() == -1) {
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&cYour inventory is full!");
+            player.sendMessage(plugin.getConfigManager().formatMessage("&cYour inventory is full!"));
             return;
         }
         
         Location pos1 = shop.getPos1();
         Location pos2 = shop.getPos2();
         
-        player.sendMessage(plugin.getConfigManager().getPrefix() + "&7Capturing build...");
+        player.sendMessage(plugin.getConfigManager().formatMessage("&7Capturing build..."));
         
         try {
             BlockVector3 min = BlockVector3.at(
@@ -93,12 +93,12 @@ public class ShopInteractListener implements Listener {
             boolean captured = plugin.getSchematicManager().captureRegion(region, schematicId);
             
             if (!captured) {
-                player.sendMessage(plugin.getConfigManager().getPrefix() + "&cFailed to capture build!");
+                player.sendMessage(plugin.getConfigManager().formatMessage("&cFailed to capture build!"));
                 return;
             }
             
             if (!plugin.getEconomyManager().withdraw(player, shop.getPrice())) {
-                player.sendMessage(plugin.getConfigManager().getPrefix() + "&cTransaction failed!");
+                player.sendMessage(plugin.getConfigManager().formatMessage("&cTransaction failed!"));
                 plugin.getSchematicManager().pasteSchematic(schematicId, pos1);
                 return;
             }
@@ -149,7 +149,7 @@ public class ShopInteractListener implements Listener {
             }
             
         } catch (Exception e) {
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&cError capturing build: " + e.getMessage());
+            player.sendMessage(plugin.getConfigManager().formatMessage("&cError capturing build: ") + e.getMessage());
             plugin.getLogger().severe("Error capturing shop build: " + e.getMessage());
             e.printStackTrace();
         }
@@ -178,6 +178,6 @@ public class ShopInteractListener implements Listener {
         }
         
         plugin.getShopManager().removeShop(block.getLocation());
-        player.sendMessage(plugin.getConfigManager().getPrefix() + "&aShop removed!");
+        player.sendMessage(plugin.getConfigManager().formatMessage("&aShop removed!"));
     }
 }

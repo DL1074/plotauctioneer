@@ -117,7 +117,7 @@ public class ConfirmCommand implements CommandExecutor {
                 "blocks", String.valueOf(blockCount)));
             
         } catch (Exception e) {
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&cFailed to capture plot: " + e.getMessage());
+            player.sendMessage(plugin.getConfigManager().formatMessage("&cFailed to capture plot: ") + e.getMessage());
             plugin.getLogger().severe("Failed to capture plot for " + player.getName() + ": " + e.getMessage());
             e.printStackTrace();
         }
@@ -147,7 +147,7 @@ public class ConfirmCommand implements CommandExecutor {
     private boolean confirmPlacement(Player player) {
         com.plotauction.models.PlotPreview preview = plugin.getPreviewManager().getPreview(player.getUniqueId());
         if (preview == null) {
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&cNo active preview!");
+            player.sendMessage(plugin.getConfigManager().formatMessage("&cNo active preview!"));
             return true;
         }
         
@@ -164,7 +164,7 @@ public class ConfirmCommand implements CommandExecutor {
         
         if (!claimResult.isAllowed()) {
             player.sendMessage(plugin.getConfigManager().getPrefix() + claimResult.getMessage());
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&7Use &e/plotcancel &7to cancel the preview");
+            player.sendMessage(plugin.getConfigManager().formatMessage("&7Use &e/plotcancel &7to cancel the preview"));
             return true;
         }
         
@@ -193,7 +193,7 @@ public class ConfirmCommand implements CommandExecutor {
             player.sendMessage(plugin.getConfigManager().getFormattedMessage("placement_success"));
             
         } catch (Exception e) {
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&cFailed to place plot: " + e.getMessage());
+            player.sendMessage(plugin.getConfigManager().formatMessage("&cFailed to place plot: ") + e.getMessage());
             plugin.getLogger().severe("Failed to place plot for " + player.getName() + ": " + e.getMessage());
             e.printStackTrace();
         }

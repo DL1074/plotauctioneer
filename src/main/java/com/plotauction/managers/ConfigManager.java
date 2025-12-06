@@ -196,6 +196,15 @@ public class ConfigManager {
     }
     
     /**
+     * Format a custom message with prefix and color codes
+     * @param message The message with & color codes
+     * @return Formatted message with prefix
+     */
+    public String formatMessage(String message) {
+        return getPrefix() + translateColorCodes(message);
+    }
+    
+    /**
      * Translate color codes from & and § to proper Minecraft formatting
      * @param text The text with color codes
      * @return Formatted text

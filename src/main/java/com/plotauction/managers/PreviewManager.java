@@ -97,7 +97,7 @@ public class PreviewManager {
                 if (activePreviews.containsKey(playerUUID)) {
                     cancelPreview(playerUUID);
                     plugin.getServer().getPlayer(playerUUID).sendMessage(
-                        plugin.getConfigManager().getPrefix() + "&cPreview timed out!");
+                        plugin.getConfigManager().formatMessage("&cPreview timed out!"));
                 }
             }
         }.runTaskLater(plugin, 60 * 20L); // 60 seconds

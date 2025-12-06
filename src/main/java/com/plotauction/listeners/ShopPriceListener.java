@@ -33,12 +33,12 @@ public class ShopPriceListener implements Listener {
         try {
             price = Double.parseDouble(message);
             if (price <= 0) {
-                player.sendMessage(plugin.getConfigManager().getPrefix() + "&cPrice must be positive!");
+                player.sendMessage(plugin.getConfigManager().formatMessage("&cPrice must be positive!"));
                 event.setCancelled(true);
                 return;
             }
         } catch (NumberFormatException e) {
-            player.sendMessage(plugin.getConfigManager().getPrefix() + "&cInvalid price! Enter numbers only.");
+            player.sendMessage(plugin.getConfigManager().formatMessage("&cInvalid price! Enter numbers only."));
             return;
         }
         
