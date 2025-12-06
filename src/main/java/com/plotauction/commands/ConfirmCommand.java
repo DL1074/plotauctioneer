@@ -101,6 +101,9 @@ public class ConfirmCommand implements CommandExecutor {
             ItemStack plotItem = plugin.getItemManager().createPlotItem(plotData);
             player.getInventory().addItem(plotItem);
             
+            // Delete the original build from the world
+            plugin.getSchematicManager().deleteRegion(selection);
+            
             // Remove the wooden axe from inventory
             removeSelectionAxe(player);
             

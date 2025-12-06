@@ -176,4 +176,30 @@ public class SchematicManager {
             return false;
         }
     }
+    
+    public void deleteRegion(PlayerSelection selection) {
+        Location pos1 = selection.getPos1();
+        Location pos2 = selection.getPos2();
+        
+        World world = BukkitAdapter.adapt(pos1.getWorld());
+        BlockVector3 min = BlockVector3.at(
+            Math.min(pos1.getBlockX(), pos2.getBlockX()),
+            Math.min(pos1.getBlockY(), pos2.getBlockY()),
+            Math.min(pos1.getBlockZ(), pos2.getBlockZ())
+        );
+        BlockVector3 max = BlockVector3.at(
+            Math.max(pos1.getBlockX(), pos2.getBlockX()),
+            Math.max(pos1.getBlockY(), pos2.getBlockY()),
+            Math.max(pos1.getBlockZ(), pos2.getBlockZ())
+        );
+        
+        CuboidRegion region = new CuboidRegion(world, min, max);
+        
+        try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
+            editSession.setBlocks((com.sk89q.worldedit.regions.Region) region, com.sk89q.worldedit.world.block.BlockTypes.AIR.getDefaultState());
+        } catch (Exception e) {
+            plugin.getLogger().severe("Failed to delete region: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }

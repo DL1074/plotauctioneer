@@ -128,6 +128,11 @@ public class ShopInteractListener implements Listener {
             ItemStack plotItem = plugin.getItemManager().createPlotItem(plotData);
             player.getInventory().addItem(plotItem);
             
+            // Delete the original build from the world
+            try (com.sk89q.worldedit.EditSession deleteSession = com.sk89q.worldedit.WorldEdit.getInstance().newEditSession(BukkitAdapter.adapt(pos1.getWorld()))) {
+                deleteSession.setBlocks((com.sk89q.worldedit.regions.Region) region, com.sk89q.worldedit.world.block.BlockTypes.AIR.getDefaultState());
+            }
+            
             plugin.getShopManager().removeShop(shop.getSignLocation());
             shop.getSignLocation().getBlock().setType(Material.AIR);
             
