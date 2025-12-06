@@ -1,0 +1,99 @@
+# PlotAuction Configuration
+
+# Schematic Storage
+storage:
+  directory: "plugins/PlotAuction/schematics/"
+  format: "SPONGE_SCHEMATIC"
+  compression: true
+  auto_cleanup: true
+  cleanup_days: 30
+
+# Capture Settings
+capture:
+  max_volume: 1000000
+  max_dimension: 200
+  min_volume: 1
+  require_ownership: false
+  cooldown_seconds: 60
+  
+# Placement Settings
+placement:
+  check_collisions: false
+  require_empty_space: false
+  paste_air: true
+  paste_biomes: false
+  paste_entities: true
+  async_paste: true
+  max_paste_time_ms: 5000
+
+# Item Settings
+item:
+  material: "PLAYER_HEAD"
+  custom_model_data: 1001
+  glow: true
+  allow_rename: false
+  allow_enchant: false
+  stackable: false
+
+# Economy (optional)
+economy:
+  enabled: true
+  capture_cost: 0.0
+  placement_cost: 0.0
+
+# Shop Settings
+shop:
+  enabled: true
+  max_shops_per_player: 10
+  allow_shop_in_any_world: true
+  require_sign_permission: false
+
+# Integration
+integration:
+  worldguard: false
+  vault: true
+  
+# Restrictions
+restrictions:
+  blacklisted_blocks:
+    - "BEDROCK"
+    - "COMMAND_BLOCK"
+    - "CHAIN_COMMAND_BLOCK"
+    - "REPEATING_COMMAND_BLOCK"
+    - "BARRIER"
+    - "STRUCTURE_BLOCK"
+  blacklisted_worlds:
+    - "world_nether"
+    - "world_the_end"
+  allowed_gamemodes:
+    - "SURVIVAL"
+    - "CREATIVE"
+
+# Messages
+messages:
+  prefix: "&8[&6PlotAuction&8]&r "
+  capture_started: "&aCapture mode activated! Use wooden axe to select two corners."
+  capture_cancelled: "&cCapture cancelled."
+  selection_incomplete: "&cPlease select both corners first!"
+  selection_point1: "&aFirst position set! &7({x}, {y}, {z})"
+  selection_point2: "&aSecond position set! &7({x}, {y}, {z})"
+  confirm_prompt: "&eSelection complete! &7Use &f/plotconfirm &7to package this build."
+  capture_success: "&aPlot packaged successfully! &7({blocks} blocks)"
+  placement_success: "&aPlot placed successfully!"
+  too_large: "&cSelection too large! Max volume: {max}"
+  too_small: "&cSelection too small! Min volume: {min}"
+  cooldown: "&cPlease wait {seconds}s before capturing again."
+  no_permission: "&cYou don't have permission to do that."
+  invalid_item: "&cThis is not a valid plot item."
+  schematic_not_found: "&cSchematic file not found!"
+  blacklisted_blocks: "&cYour selection contains blacklisted blocks!"
+  world_not_allowed: "&cYou cannot capture plots in this world."
+  shop_created: "&aPlot shop created for {price}!"
+  shop_removed: "&aShop removed and item returned!"
+  shop_purchased: "&aPurchased plot for {price}!"
+  shop_sold: "&a{buyer} purchased your plot for {price}!"
+  not_enough_money: "&cYou need {price} to buy this plot!"
+  inventory_full: "&cYour inventory is full!"
+  own_shop: "&cYou can't buy your own shop!"
+  not_a_shop: "&cThis is not a plot shop!"
+  shop_limit_reached: "&cYou've reached the maximum number of shops ({limit})!"

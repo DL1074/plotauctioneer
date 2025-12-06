@@ -1,0 +1,128 @@
+name: PlotAuction
+version: '${project.version}'
+main: com.plotauction.PlotAuctionPlugin
+api-version: '1.20'
+depend: [FastAsyncWorldEdit]
+softdepend: [Vault]
+author: David
+description: Tradeable building system for Minecraft
+
+commands:
+  plotcapture:
+    description: Start plot capture mode
+    usage: /<command>
+    permission: plotauction.capture
+    aliases: [pc, pcapture]
+  
+  plotconfirm:
+    description: Confirm selection and package plot
+    usage: /<command>
+    permission: plotauction.capture
+    aliases: [pconfirm]
+  
+  plotcancel:
+    description: Cancel current selection
+    usage: /<command>
+    permission: plotauction.capture
+    aliases: [pcancel]
+  
+  plotinfo:
+    description: View plot item information
+    usage: /<command>
+    permission: plotauction.info
+    aliases: [pinfo]
+  
+  plotlist:
+    description: List your packaged plots
+    usage: /<command>
+    permission: plotauction.list
+    aliases: [plist]
+  
+  plotadmin:
+    description: Admin commands
+    usage: /<command> <reload|give>
+    permission: plotauction.admin
+    aliases: [padmin]
+  
+  plotshop:
+    description: Manage plot shops
+    usage: /<command> <create|remove|list|info>
+    permission: plotauction.shop
+    aliases: [pshop, ps]
+
+permissions:
+  plotauction.*:
+    description: All PlotAuction permissions
+    children:
+      plotauction.capture: true
+      plotauction.place: true
+      plotauction.info: true
+      plotauction.list: true
+      plotauction.trade: true
+      plotauction.shop: true
+      plotauction.admin: true
+  
+  plotauction.capture:
+    description: Can package builds
+    default: true
+  
+  plotauction.place:
+    description: Can place plot items
+    default: true
+  
+  plotauction.info:
+    description: Can view plot info
+    default: true
+  
+  plotauction.list:
+    description: Can list own plots
+    default: true
+  
+  plotauction.trade:
+    description: Can trade plot items
+    default: true
+  
+  plotauction.shop:
+    description: Can use shop commands
+    default: true
+    children:
+      plotauction.shop.create: true
+      plotauction.shop.remove: true
+      plotauction.shop.list: true
+      plotauction.shop.info: true
+  
+  plotauction.shop.create:
+    description: Can create plot shops
+    default: true
+  
+  plotauction.shop.remove:
+    description: Can remove own plot shops
+    default: true
+  
+  plotauction.shop.list:
+    description: Can list own plot shops
+    default: true
+  
+  plotauction.shop.info:
+    description: Can view shop info
+    default: true
+  
+  plotauction.shop.remove.others:
+    description: Can remove other players' shops
+    default: op
+  
+  plotauction.shop.break.others:
+    description: Can break other players' shop signs
+    default: op
+  
+  plotauction.admin:
+    description: Admin commands
+    default: op
+  
+  plotauction.bypass.size:
+    description: Bypass size limits
+    default: op
+  
+  plotauction.bypass.region:
+    description: Bypass region restrictions
+    default: op

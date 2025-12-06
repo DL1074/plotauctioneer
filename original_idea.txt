@@ -1,0 +1,21 @@
+how hard would it be to build a plugin
+
+that utilizes worldedit
+
+for when somebody builds a certain structure, uses "worldedit" and cuts (copy paste cut) the structure and saves it as a schematic in a nearby folder and gives him a item, maybe custom texture. 
+the world edit will base its pasting at the center of said plot of land
+
+the custom item is then placed on the ground by another player
+this item will disappear from their inventory
+the worledit will paste this item onto the land, the schematic will be deleted and disappear from the stored folder.
+
+so the idea is 
+custom command -> gives you the wooden axe -> select two points like world edit -> say confirm -> said plot is copied from world -> determines middle point of the plot -> saves plot as schematic -> sets the original plot to air effectively deleting it -> gives player custom data item block that represents said schematic
+
+
+the item can be sold, auctioned, etc.
+
+when the player who now wants to put it down
+
+his placement location will be the midpoint of the schematic and will be pasted in which
+places block -> finds schematic -> loads schematic -> pastes schematic -> deleletes schematic from save folder
