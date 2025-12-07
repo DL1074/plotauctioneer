@@ -56,24 +56,62 @@ public class PreviewManager {
         int dx = preview.getDimensionX();
         int dy = preview.getDimensionY();
         int dz = preview.getDimensionZ();
+        int rotation = preview.getRotation();
         
-        // Draw edges of the bounding box
-        drawLine(loc.clone(), loc.clone().add(dx, 0, 0), Particle.VILLAGER_HAPPY);
-        drawLine(loc.clone(), loc.clone().add(0, dy, 0), Particle.VILLAGER_HAPPY);
-        drawLine(loc.clone(), loc.clone().add(0, 0, dz), Particle.VILLAGER_HAPPY);
+        // Calculate 8 corners of the bounding box with rotation applied
+        Location[] corners = new Location[8];
+        corners[0] = rotatePoint(loc, 0, 0, 0, rotation);
+        corners[1] = rotatePoint(loc, dx, 0, 0, rotation);
+        corners[2] = rotatePoint(loc, dx, 0, dz, rotation);
+        corners[3] = rotatePoint(loc, 0, 0, dz, rotation);
+        corners[4] = rotatePoint(loc, 0, dy, 0, rotation);
+        corners[5] = rotatePoint(loc, dx, dy, 0, rotation);
+        corners[6] = rotatePoint(loc, dx, dy, dz, rotation);
+        corners[7] = rotatePoint(loc, 0, dy, dz, rotation);
         
-        drawLine(loc.clone().add(dx, 0, 0), loc.clone().add(dx, dy, 0), Particle.VILLAGER_HAPPY);
-        drawLine(loc.clone().add(dx, 0, 0), loc.clone().add(dx, 0, dz), Particle.VILLAGER_HAPPY);
+        // Draw bottom edges
+        drawLine(corners[0], corners[1], Particle.VILLAGER_HAPPY);
+        drawLine(corners[1], corners[2], Particle.VILLAGER_HAPPY);
+        drawLine(corners[2], corners[3], Particle.VILLAGER_HAPPY);
+        drawLine(corners[3], corners[0], Particle.VILLAGER_HAPPY);
         
-        drawLine(loc.clone().add(0, dy, 0), loc.clone().add(dx, dy, 0), Particle.VILLAGER_HAPPY);
-        drawLine(loc.clone().add(0, dy, 0), loc.clone().add(0, dy, dz), Particle.VILLAGER_HAPPY);
+        // Draw top edges
+        drawLine(corners[4], corners[5], Particle.VILLAGER_HAPPY);
+        drawLine(corners[5], corners[6], Particle.VILLAGER_HAPPY);
+        drawLine(corners[6], corners[7], Particle.VILLAGER_HAPPY);
+        drawLine(corners[7], corners[4], Particle.VILLAGER_HAPPY);
         
-        drawLine(loc.clone().add(0, 0, dz), loc.clone().add(dx, 0, dz), Particle.VILLAGER_HAPPY);
-        drawLine(loc.clone().add(0, 0, dz), loc.clone().add(0, dy, dz), Particle.VILLAGER_HAPPY);
+        // Draw vertical edges
+        drawLine(corners[0], corners[4], Particle.VILLAGER_HAPPY);
+        drawLine(corners[1], corners[5], Particle.VILLAGER_HAPPY);
+        drawLine(corners[2], corners[6], Particle.VILLAGER_HAPPY);
+        drawLine(corners[3], corners[7], Particle.VILLAGER_HAPPY);
         
-        drawLine(loc.clone().add(dx, dy, 0), loc.clone().add(dx, dy, dz), Particle.VILLAGER_HAPPY);
-        drawLine(loc.clone().add(dx, 0, dz), loc.clone().add(dx, dy, dz), Particle.VILLAGER_HAPPY);
-        drawLine(loc.clone().add(0, dy, dz), loc.clone().add(dx, dy, dz), Particle.VILLAGER_HAPPY);
+        // Draw front indicator (red particles on front face)
+        // Front is the face opposite to capture direction (corners 0-1-5-4)
+        drawLine(corners[0], corners[1], Particle.REDSTONE);
+        drawLine(corners[1], corners[5], Particle.REDSTONE);
+        drawLine(corners[5], corners[4], Particle.REDSTONE);
+        drawLine(corners[4], corners[0], Particle.REDSTONE);
+    }
+    
+    /**
+     * Rotate a point around the origin by the given angle (in degrees)
+     */
+    private Location rotatePoint(Location origin, double x, double y, double z, int degrees) {
+        if (degrees == 0) {
+            return origin.clone().add(x, y, z);
+        }
+        
+        double radians = Math.toRadians(degrees);
+        double cos = Math.cos(radians);
+        double sin = Math.sin(radians);
+        
+        // Rotate around Y axis (yaw rotation)
+        double newX = x * cos - z * sin;
+        double newZ = x * sin + z * cos;
+        
+        return origin.clone().add(newX, y, newZ);
     }
     
     private void drawLine(Location start, Location end, Particle particle) {
