@@ -38,23 +38,39 @@ A Minecraft plugin that allows players to package their builds into tradeable it
 
 ## 🎮 Commands
 
+### Plot Commands
+
 | Command | Description | Permission |
 |---------|-------------|------------|
 | `/plotcapture` | Start plot capture mode | `plotauction.capture` |
 | `/plotconfirm [name]` | Confirm selection/placement | `plotauction.capture` |
 | `/plotcancel` | Cancel selection/preview | `plotauction.capture` |
+| `/plotrotate` | Rotate preview 90° clockwise | `plotauction.place` |
+| `/plotmove <x> <y> <z>` | Move preview by offset | `plotauction.place` |
 | `/plotinfo` | View item metadata (hold item) | `plotauction.info` |
 | `/plotlist` | List your packaged plots | `plotauction.list` |
+
+### Shop Commands
+
+| Command | Description | Permission |
+|---------|-------------|------------|
 | `/plotshop create <name>` | Create a plot shop from selection | `plotauction.shop.create` |
 | `/plotshop remove` | Cancel pending shop creation | `plotauction.shop.remove` |
 | `/plotshop list` | List your active shops | `plotauction.shop.list` |
 | `/plotshop info` | View shop information | `plotauction.shop.info` |
+
+### Admin Commands
+
+| Command | Description | Permission |
+|---------|-------------|------------|
 | `/plotadmin reload` | Reload config | `plotauction.admin` |
 
 **Aliases:**
 - `/plotcapture` → `/pc`, `/pcapture`
 - `/plotconfirm` → `/pconfirm`
 - `/plotcancel` → `/pcancel`
+- `/plotrotate` → `/protate`, `/pr`
+- `/plotmove` → `/pmove`, `/pm`
 - `/plotinfo` → `/pinfo`
 - `/plotlist` → `/plist`
 - `/plotshop` → `/pshop`, `/ps`
@@ -99,12 +115,18 @@ plotauction.bypass.region        # Bypass region restrictions (default: op)
 1. Hold the plot item in your hand
 2. **Right-click** on a block or in the air
 3. A **green particle outline** appears showing where the build will be placed
-4. Walk around and inspect the preview to ensure it won't overlap with other builds
-5. Run `/plotconfirm` to place the build, or `/plotcancel` to abort
-6. The item will be consumed and the schematic deleted
+4. A **red frame** marks the front/door side of the building
+5. Walk around and inspect the preview to ensure it won't overlap with other builds
+6. **Optional**: Adjust the placement:
+   - `/plotrotate` - Rotate 90° clockwise (red frame rotates with building)
+   - `/plotmove <x> <y> <z>` - Move by offset (e.g., `/plotmove 0 1 0` moves up 1 block)
+7. Run `/plotconfirm` to place the build, or `/plotcancel` to abort
+8. The item will be consumed and the schematic deleted
 
 **Preview Features**:
 - Green particle box outline shows exact placement
+- Red frame indicates the front/door side (based on your facing direction when captured)
+- Rotation preserves the front face orientation
 - Displays build dimensions and coordinates
 - Updates every 0.5 seconds
 - Auto-expires after 60 seconds
@@ -198,6 +220,7 @@ The compiled JAR will be in `target/PlotAuction-1.0.0.jar`
 - SPONGE_SCHEMATIC format is deprecated but still functional
 - Large schematics (>100k blocks) may cause brief lag even with async
 - Some deprecation warnings in code (non-critical, will be updated in future versions)
+- Existing shops created before v1.0.0 won't have front face data (will default to north)
 
 ## 📝 Planned Features
 
@@ -206,10 +229,11 @@ The compiled JAR will be in `target/PlotAuction-1.0.0.jar`
 - [x] Region-based shop creation
 - [x] In-world build browsing
 - [x] Preview mode with particle outlines
+- [x] Plot rotation support with front face tracking
+- [x] Plot offset/move support
 - [x] HuskClaims integration for land protection
 - [x] WorldGuard integration for region protection
 - [ ] Database storage option
-- [ ] Plot rotation support
 - [ ] Plot categories/tags
 - [ ] Shop search and filtering
 - [ ] Shop rental system (temporary shops)
@@ -228,10 +252,7 @@ This project is licensed under the MIT License.
 
 ## 📚 Additional Documentation
 
-- **[SHOP_SYSTEM.md](SHOP_SYSTEM.md)** - ⚠️ OUTDATED - Being updated for new workflow
-- **[BUILD.md](BUILD.md)** - Build instructions for developers
-- **[QUICK_START.md](QUICK_START.md)** - Quick start guide for users
-- **[REBUILD_STATUS.md](REBUILD_STATUS.md)** - Technical details of the shop system rebuild
+- **[QUICKSTART.md](QUICKSTART.md)** - Quick start guide for setup and configuration
 
 ## 💬 Support
 
