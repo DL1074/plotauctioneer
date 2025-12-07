@@ -81,6 +81,8 @@ public class PlotAuctionPlugin extends JavaPlugin {
         getCommand("plotlist").setExecutor(new ListCommand(this));
         getCommand("plotadmin").setExecutor(new AdminCommand(this));
         getCommand("plotshop").setExecutor(new ShopCommand(this));
+        getCommand("plotrotate").setExecutor(new com.plotauction.commands.RotateCommand(this));
+        getCommand("plotmove").setExecutor(new com.plotauction.commands.MoveCommand(this));
     }
     
     private void registerListeners() {

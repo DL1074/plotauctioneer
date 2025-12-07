@@ -94,7 +94,8 @@ public class ConfirmCommand implements CommandExecutor {
                 dimensions[2],
                 blockCount,
                 System.currentTimeMillis(),
-                buildName
+                buildName,
+                player.getLocation().getYaw() // Store player's facing direction
             );
             
             // Create and give item
@@ -152,8 +153,8 @@ public class ConfirmCommand implements CommandExecutor {
             return true;
         }
         
-        // Check land claims
-        Location corner1 = preview.getPasteLocation();
+        // Check land claims (use final location with offset)
+        Location corner1 = preview.getFinalLocation();
         Location corner2 = corner1.clone().add(
             preview.getDimensionX(),
             preview.getDimensionY(),
@@ -170,20 +171,15 @@ public class ConfirmCommand implements CommandExecutor {
         }
         
         try {
-            // Paste the schematic
-            plugin.getSchematicManager().pasteSchematic(preview.getSchematicId(), preview.getPasteLocation());
+            // Paste the schematic with rotation and offset
+            plugin.getSchematicManager().pasteSchematic(
+                preview.getSchematicId(), 
+                preview.getFinalLocation(),
+                preview.getRotation()
+            );
             
-            // Remove item from inventory
-            ItemStack plotItem = preview.getPlotItem();
-            ItemStack mainHand = player.getInventory().getItemInMainHand();
-            
-            if (mainHand != null && plugin.getItemManager().isPlotItem(mainHand)) {
-                if (mainHand.getAmount() > 1) {
-                    mainHand.setAmount(mainHand.getAmount() - 1);
-                } else {
-                    player.getInventory().setItemInMainHand(null);
-                }
-            }
+            // Remove the plot item from inventory
+            player.getInventory().remove(preview.getPlotItem());
             
             // Delete schematic file
             plugin.getSchematicManager().deleteSchematic(preview.getSchematicId());

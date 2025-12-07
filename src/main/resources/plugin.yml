@@ -49,6 +49,18 @@ commands:
     usage: /<command> <create|remove|list|info>
     permission: plotauction.shop
     aliases: [pshop, ps]
+  
+  plotrotate:
+    description: Rotate plot preview 90 degrees
+    usage: /<command>
+    permission: plotauction.place
+    aliases: [protate, pr]
+  
+  plotmove:
+    description: Move plot preview by offset
+    usage: /<command> <x> <y> <z>
+    permission: plotauction.place
+    aliases: [pmove, pm]
 
 permissions:
   plotauction.*:

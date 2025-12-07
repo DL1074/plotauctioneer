@@ -13,10 +13,11 @@ public class PlotData {
     private final int blockCount;
     private final long captureTime;
     private final String buildName;
+    private final float captureYaw; // Player's yaw when capturing (opposite = front of build)
     
     public PlotData(UUID schematicId, UUID ownerUUID, String ownerName,
                     int dimensionX, int dimensionY, int dimensionZ,
-                    int blockCount, long captureTime, String buildName) {
+                    int blockCount, long captureTime, String buildName, float captureYaw) {
         this.schematicId = schematicId;
         this.ownerUUID = ownerUUID;
         this.ownerName = ownerName;
@@ -26,6 +27,7 @@ public class PlotData {
         this.blockCount = blockCount;
         this.captureTime = captureTime;
         this.buildName = buildName;
+        this.captureYaw = captureYaw;
     }
     
     public UUID getSchematicId() {
@@ -62,5 +64,9 @@ public class PlotData {
     
     public String getBuildName() {
         return buildName;
+    }
+    
+    public float getCaptureYaw() {
+        return captureYaw;
     }
 }

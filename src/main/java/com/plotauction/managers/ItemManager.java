@@ -145,6 +145,6 @@ public class ItemManager {
         String buildName = net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText()
             .serialize(meta.displayName());
         
-        return new PlotData(schematicId, null, ownerName, dimX, dimY, dimZ, blockCount, 0, buildName);
+        return new PlotData(schematicId, null, ownerName, dimX, dimY, dimZ, blockCount, 0, buildName, 0.0f);
     }
 }

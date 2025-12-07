@@ -9,16 +9,21 @@ import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.extent.clipboard.BlockArrayClipboard;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.extent.clipboard.io.BuiltInClipboardFormat;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
 import com.sk89q.worldedit.extent.clipboard.io.ClipboardWriter;
 import com.sk89q.worldedit.function.operation.ForwardExtentCopy;
+import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.math.transform.AffineTransform;
 import com.sk89q.worldedit.regions.CuboidRegion;
+import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
@@ -87,7 +92,7 @@ public class SchematicManager {
         return BuiltInClipboardFormat.SPONGE_SCHEMATIC.load(schematicFile);
     }
     
-    public void pasteSchematic(UUID schematicId, Location location) throws IOException {
+    public void pasteSchematic(UUID schematicId, Location location, int rotation) throws IOException {
         Clipboard clipboard = loadSchematic(schematicId);
         
         World world = BukkitAdapter.adapt(location.getWorld());
@@ -101,7 +106,20 @@ public class SchematicManager {
         if (plugin.getConfigManager().isAsyncPaste()) {
             FaweAPI.getTaskManager().async(() -> {
                 try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
-                    clipboard.paste(world, pasteLocation, true, true, null);
+                    ClipboardHolder holder = new ClipboardHolder(clipboard);
+                    
+                    // Apply rotation if needed
+                    if (rotation != 0) {
+                        AffineTransform transform = new AffineTransform();
+                        transform = transform.rotateY(-rotation); // Negative for clockwise rotation
+                        holder.setTransform(transform);
+                    }
+                    
+                    Operation operation = holder.createPaste(editSession)
+                        .to(pasteLocation)
+                        .ignoreAirBlocks(false)
+                        .build();
+                    Operations.complete(operation);
                 } catch (Exception e) {
                     plugin.getLogger().severe("Failed to paste schematic: " + e.getMessage());
                     e.printStackTrace();
@@ -109,9 +127,27 @@ public class SchematicManager {
             });
         } else {
             try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
-                clipboard.paste(world, pasteLocation, true, true, null);
+                ClipboardHolder holder = new ClipboardHolder(clipboard);
+                
+                // Apply rotation if needed
+                if (rotation != 0) {
+                    AffineTransform transform = new AffineTransform();
+                    transform = transform.rotateY(-rotation); // Negative for clockwise rotation
+                    holder.setTransform(transform);
+                }
+                
+                Operation operation = holder.createPaste(editSession)
+                    .to(pasteLocation)
+                    .ignoreAirBlocks(false)
+                    .build();
+                Operations.complete(operation);
             }
         }
+    }
+    
+    // Overload for backward compatibility
+    public void pasteSchematic(UUID schematicId, Location location) throws IOException {
+        pasteSchematic(schematicId, location, 0);
     }
     
     public void deleteSchematic(UUID schematicId) {

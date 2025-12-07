@@ -52,7 +52,7 @@ public class PreviewManager {
     }
     
     private void displayParticleOutline(PlotPreview preview) {
-        Location loc = preview.getPasteLocation();
+        Location loc = preview.getFinalLocation(); // Use final location with offset
         int dx = preview.getDimensionX();
         int dy = preview.getDimensionY();
         int dz = preview.getDimensionZ();
@@ -112,11 +112,23 @@ public class PreviewManager {
     }
     
     public void cancelPreview(UUID playerUUID) {
-        activePreviews.remove(playerUUID);
-        
-        BukkitRunnable task = previewTasks.remove(playerUUID);
-        if (task != null) {
-            task.cancel();
+        PlotPreview preview = activePreviews.remove(playerUUID);
+        if (preview != null) {
+            BukkitRunnable task = previewTasks.remove(playerUUID);
+            if (task != null) {
+                task.cancel();
+            }
+        }
+    }
+    
+    /**
+     * Update the preview display (called when rotation or offset changes)
+     */
+    public void updatePreview(UUID playerUUID) {
+        PlotPreview preview = activePreviews.get(playerUUID);
+        if (preview != null) {
+            // Particles will update automatically on next tick
+            // This method exists for future enhancements
         }
     }
     

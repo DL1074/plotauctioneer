@@ -122,7 +122,8 @@ public class ShopInteractListener implements Listener {
                 dims[2],
                 blockCount,
                 System.currentTimeMillis(),
-                shop.getPlotName()
+                shop.getPlotName(),
+                0.0f // Default yaw for shop purchases
             );
             
             ItemStack plotItem = plugin.getItemManager().createPlotItem(plotData);
