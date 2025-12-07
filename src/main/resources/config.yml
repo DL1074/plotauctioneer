@@ -14,7 +14,7 @@ capture:
   max_dimension: 200
   min_volume: 1
   require_ownership: false
-  cooldown_seconds: 60
+  cooldown_seconds: 2
   
 # Placement Settings
 placement:

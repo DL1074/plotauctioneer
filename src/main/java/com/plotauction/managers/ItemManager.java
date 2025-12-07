@@ -51,9 +51,13 @@ public class ItemManager {
         
         meta.lore(lore);
         
-        // Store schematic ID
+        // Store schematic ID and front face index
         meta.getPersistentDataContainer().set(schematicIdKey, PersistentDataType.STRING, 
             plotData.getSchematicId().toString());
+        meta.getPersistentDataContainer().set(
+            new NamespacedKey(plugin, "frontFaceIndex"), 
+            PersistentDataType.INTEGER, 
+            plotData.getFrontFaceIndex());
         
         // Apply custom texture from config
         try {
@@ -145,6 +149,13 @@ public class ItemManager {
         String buildName = net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText()
             .serialize(meta.displayName());
         
-        return new PlotData(schematicId, null, ownerName, dimX, dimY, dimZ, blockCount, 0, buildName, 0.0f);
+        // Read front face index from persistent data (default to 0 if not found)
+        int frontFaceIndex = meta.getPersistentDataContainer().getOrDefault(
+            new NamespacedKey(plugin, "frontFaceIndex"),
+            PersistentDataType.INTEGER,
+            0
+        );
+        
+        return new PlotData(schematicId, null, ownerName, dimX, dimY, dimZ, blockCount, 0, buildName, 0.0f, frontFaceIndex);
     }
 }

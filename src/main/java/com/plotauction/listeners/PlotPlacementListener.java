@@ -66,6 +66,9 @@ public class PlotPlacementListener implements Listener {
             placementLocation = player.getLocation();
         }
         
+        // Debug: Show front face index
+        player.sendMessage("§7[Debug] Front Face Index: §e" + plotData.getFrontFaceIndex());
+        
         PlotPreview preview = new PlotPreview(
             player.getUniqueId(),
             schematicId,
@@ -74,7 +77,8 @@ public class PlotPlacementListener implements Listener {
             plotData.getDimensionY(),
             plotData.getDimensionZ(),
             item,
-            plotData.getCaptureYaw()
+            plotData.getCaptureYaw(),
+            plotData.getFrontFaceIndex()
         );
         
         plugin.getPreviewManager().createPreview(preview);

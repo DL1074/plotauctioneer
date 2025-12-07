@@ -14,10 +14,11 @@ public class PlotData {
     private final long captureTime;
     private final String buildName;
     private final float captureYaw; // Player's yaw when capturing (opposite = front of build)
+    private final int frontFaceIndex; // Which face has the door (0-3)
     
     public PlotData(UUID schematicId, UUID ownerUUID, String ownerName,
                     int dimensionX, int dimensionY, int dimensionZ,
-                    int blockCount, long captureTime, String buildName, float captureYaw) {
+                    int blockCount, long captureTime, String buildName, float captureYaw, int frontFaceIndex) {
         this.schematicId = schematicId;
         this.ownerUUID = ownerUUID;
         this.ownerName = ownerName;
@@ -28,6 +29,7 @@ public class PlotData {
         this.captureTime = captureTime;
         this.buildName = buildName;
         this.captureYaw = captureYaw;
+        this.frontFaceIndex = frontFaceIndex;
     }
     
     public UUID getSchematicId() {
@@ -68,5 +70,29 @@ public class PlotData {
     
     public float getCaptureYaw() {
         return captureYaw;
+    }
+    
+    public int getFrontFaceIndex() {
+        return frontFaceIndex;
+    }
+    
+    /**
+     * Calculate front face from yaw - returns OPPOSITE of where player is facing
+     * Face indices: 0=Z- (north), 1=X+ (east), 2=Z+ (south), 3=X- (west)
+     */
+    public static int calculateFrontFaceFromYaw(float yaw) {
+        float normalizedYaw = ((yaw % 360) + 360) % 360;
+        
+        // Minecraft yaw: South=0°, West=90°, North=180°, East=270°
+        // Return OPPOSITE face (where the door is)
+        if (normalizedYaw >= 315 || normalizedYaw < 45) {
+            return 0; // Facing south -> door on north
+        } else if (normalizedYaw >= 45 && normalizedYaw < 135) {
+            return 1; // Facing west -> door on east
+        } else if (normalizedYaw >= 135 && normalizedYaw < 225) {
+            return 2; // Facing north -> door on south
+        } else {
+            return 3; // Facing east -> door on west
+        }
     }
 }

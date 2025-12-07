@@ -85,6 +85,12 @@ public class ConfirmCommand implements CommandExecutor {
             
             // Create plot data
             String buildName = args.length > 0 ? String.join(" ", args) : "Unnamed Plot";
+            float captureYaw = player.getLocation().getYaw();
+            int frontFaceIndex = PlotData.calculateFrontFaceFromYaw(captureYaw);
+            
+            // Debug: Show calculated values
+            player.sendMessage("§7[Debug] Yaw: §e" + captureYaw + "§7, Front Face: §e" + frontFaceIndex);
+            
             PlotData plotData = new PlotData(
                 schematicId,
                 player.getUniqueId(),
@@ -95,7 +101,8 @@ public class ConfirmCommand implements CommandExecutor {
                 blockCount,
                 System.currentTimeMillis(),
                 buildName,
-                player.getLocation().getYaw() // Store player's facing direction
+                captureYaw,
+                frontFaceIndex
             );
             
             // Create and give item
