@@ -73,7 +73,8 @@ public class PlotPlacementListener implements Listener {
             plotData.getDimensionX(),
             plotData.getDimensionY(),
             plotData.getDimensionZ(),
-            item
+            item,
+            plotData.getCaptureYaw()
         );
         
         plugin.getPreviewManager().createPreview(preview);
