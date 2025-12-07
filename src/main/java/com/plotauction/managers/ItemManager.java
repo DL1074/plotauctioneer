@@ -30,7 +30,7 @@ public class ItemManager {
     public ItemStack createPlotItem(PlotData plotData) {
         Material material = plugin.getConfigManager().getItemMaterial();
         ItemStack item = new ItemStack(material);
-        ItemMeta meta = item.getItemMeta();
+        org.bukkit.inventory.meta.SkullMeta meta = (org.bukkit.inventory.meta.SkullMeta) item.getItemMeta();
         
         // Set display name
         meta.displayName(Component.text(plotData.getBuildName(), NamedTextColor.GOLD, TextDecoration.BOLD)
@@ -54,6 +54,18 @@ public class ItemManager {
         // Store schematic ID
         meta.getPersistentDataContainer().set(schematicIdKey, PersistentDataType.STRING, 
             plotData.getSchematicId().toString());
+        
+        // Apply custom texture from config
+        try {
+            String textureValue = plugin.getConfigManager().getItemTexture();
+            com.destroystokyo.paper.profile.PlayerProfile profile = plugin.getServer().createProfile(java.util.UUID.randomUUID());
+            com.destroystokyo.paper.profile.ProfileProperty property = 
+                new com.destroystokyo.paper.profile.ProfileProperty("textures", textureValue);
+            profile.setProperty(property);
+            meta.setPlayerProfile(profile);
+        } catch (Exception e) {
+            plugin.getLogger().warning("Failed to apply custom texture to plot item: " + e.getMessage());
+        }
         
         // Add glow effect
         if (plugin.getConfigManager().isItemGlow()) {

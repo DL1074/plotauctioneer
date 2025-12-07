@@ -155,7 +155,7 @@ public class ShopManager {
     
     public ItemStack createShopBlock() {
         ItemStack item = new ItemStack(Material.PLAYER_HEAD);
-        ItemMeta meta = item.getItemMeta();
+        org.bukkit.inventory.meta.SkullMeta meta = (org.bukkit.inventory.meta.SkullMeta) item.getItemMeta();
         
         meta.displayName(Component.text("Plot Shop Block", NamedTextColor.GOLD, TextDecoration.BOLD)
             .decoration(TextDecoration.ITALIC, false));
@@ -166,6 +166,18 @@ public class ShopManager {
         lore.add(Component.text("a shop sign for your plot", NamedTextColor.GRAY)
             .decoration(TextDecoration.ITALIC, false));
         meta.lore(lore);
+        
+        // Apply custom texture from config
+        try {
+            String textureValue = plugin.getConfigManager().getShopBlockTexture();
+            com.destroystokyo.paper.profile.PlayerProfile profile = plugin.getServer().createProfile(UUID.randomUUID());
+            com.destroystokyo.paper.profile.ProfileProperty property = 
+                new com.destroystokyo.paper.profile.ProfileProperty("textures", textureValue);
+            profile.setProperty(property);
+            meta.setPlayerProfile(profile);
+        } catch (Exception e) {
+            plugin.getLogger().warning("Failed to apply custom texture to shop block: " + e.getMessage());
+        }
         
         item.setItemMeta(meta);
         return item;

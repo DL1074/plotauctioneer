@@ -34,6 +34,8 @@ item:
   allow_rename: false
   allow_enchant: false
   stackable: false
+  # Custom head texture for plot items (base64 encoded texture value)
+  texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmRjYmJhNmM3NTFkYWI1ZjJiMzA5YmM1OTQxZThlYTc5ODc3Y2NlNDI1NjkzNmExODk4MTFlZDdlYzM2ZDI1YyJ9fX0="
 
 # Economy (optional)
 economy:
@@ -47,6 +49,8 @@ shop:
   max_shops_per_player: 10
   allow_shop_in_any_world: true
   require_sign_permission: false
+  # Custom head texture for shop block (base64 encoded texture value)
+  block_texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGM3ZDY1YTM5NjZhODJkYzk2OTk1NGFjNjg2MGI1NWRhNzdiZGE1MDMyZThjYzFmMzhlY2UwNGFhOTQwYWFlZCJ9fX0="
 
 # Integration
 integration:

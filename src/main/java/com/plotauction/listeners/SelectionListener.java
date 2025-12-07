@@ -61,7 +61,7 @@ public class SelectionListener implements Listener {
                 int[] dims = selection.getDimensions();
                 player.sendMessage(plugin.getConfigManager().formatMessage("&7Selection complete! Size: &e") + 
                     dims[0] + "x" + dims[1] + "x" + dims[2] + " &7(&e" + selection.getVolume() + " blocks&7)");
-                player.sendMessage(plugin.getConfigManager().formatMessage("&7Use &e/plotconfirm <name> &7to capture"));
+                player.sendMessage(plugin.getConfigManager().formatMessage("&7Use &e/plotconfirm <build name> &7to capture your build"));
             }
         }
     }

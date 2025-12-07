@@ -115,6 +115,7 @@ public class ConfirmCommand implements CommandExecutor {
             
             player.sendMessage(plugin.getConfigManager().getFormattedMessage("capture_success", 
                 "blocks", String.valueOf(blockCount)));
+            player.sendMessage(plugin.getConfigManager().formatMessage("&7Right-click with the item to preview placement, then &e/plotconfirm &7to place it!"));
             
         } catch (Exception e) {
             player.sendMessage(plugin.getConfigManager().formatMessage("&cFailed to capture plot: ") + e.getMessage());

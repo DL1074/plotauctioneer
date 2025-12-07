@@ -126,6 +126,10 @@ public class ConfigManager {
         return config.getBoolean("item.stackable", false);
     }
     
+    public String getItemTexture() {
+        return config.getString("item.texture", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmRjYmJhNmM3NTFkYWI1ZjJiMzA5YmM1OTQxZThlYTc5ODc3Y2NlNDI1NjkzNmExODk4MTFlZDdlYzM2ZDI1YyJ9fX0=");
+    }
+    
     // Economy settings
     public boolean isEconomyEnabled() {
         return config.getBoolean("economy.enabled", false);
@@ -139,13 +143,18 @@ public class ConfigManager {
         return config.getDouble("economy.placement_cost", 50.0);
     }
     
+    // Shop Settings
+    public String getShopBlockTexture() {
+        return config.getString("shop.block_texture", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmRjYmJhNmM3NTFkYWI1ZjJiMzA5YmM1OTQxZThlYTc5ODc3Y2NlNDI1NjkzNmExODk4MTFlZDdlYzM2ZDI1YyJ9fX0=");
+    }
+    
     // Integration settings
     public boolean isWorldGuardEnabled() {
         return config.getBoolean("integration.worldguard", false);
     }
     
     public boolean isVaultEnabled() {
-        return config.getBoolean("integration.vault", false);
+        return config.getBoolean("integration.vault", true);
     }
     
     // Restrictions
