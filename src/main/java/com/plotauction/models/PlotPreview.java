@@ -126,7 +126,7 @@ public class PlotPreview {
     public int getFrontFaceIndex() {
         // Just return the saved frontFaceIndex - the corners are already rotated by rotatePoint()
         // so the same corner set will be at different world positions after rotation
-        System.out.println("[PlotPreview Debug] frontFaceIndex=" + frontFaceIndex + ", rotation=" + rotation + ", returning=" + frontFaceIndex);
+        //System.out.println("[PlotPreview Debug] frontFaceIndex=" + frontFaceIndex + ", rotation=" + rotation + ", returning=" + frontFaceIndex);
         return frontFaceIndex;
     }
 }

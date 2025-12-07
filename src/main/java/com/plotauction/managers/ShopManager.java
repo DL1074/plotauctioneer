@@ -58,8 +58,10 @@ public class ShopManager {
                     Location signLoc = deserializeLocation(shopsConfig.getString("shops." + key + ".signLocation"));
                     Location pos1 = deserializeLocation(shopsConfig.getString("shops." + key + ".pos1"));
                     Location pos2 = deserializeLocation(shopsConfig.getString("shops." + key + ".pos2"));
+                    float captureYaw = (float) shopsConfig.getDouble("shops." + key + ".captureYaw", 0.0);
+                    int frontFaceIndex = shopsConfig.getInt("shops." + key + ".frontFaceIndex", 0);
                     
-                    PlotShop shop = new PlotShop(shopId, ownerUUID, plotName, signLoc, pos1, pos2, price, createdTime);
+                    PlotShop shop = new PlotShop(shopId, ownerUUID, plotName, signLoc, pos1, pos2, price, createdTime, captureYaw, frontFaceIndex);
                     activeShops.put(signLoc, shop);
                 } catch (Exception e) {
                     plugin.getLogger().warning("Failed to load shop " + key + ": " + e.getMessage());
@@ -68,8 +70,8 @@ public class ShopManager {
         }
     }
     
-    public void createPendingShop(UUID playerUUID, Location pos1, Location pos2, String plotName) {
-        PendingShop pending = new PendingShop(playerUUID, pos1, pos2, plotName);
+    public void createPendingShop(UUID playerUUID, Location pos1, Location pos2, String plotName, float captureYaw, int frontFaceIndex) {
+        PendingShop pending = new PendingShop(playerUUID, pos1, pos2, plotName, captureYaw, frontFaceIndex);
         pendingShops.put(playerUUID, pending);
     }
     
@@ -96,7 +98,9 @@ public class ShopManager {
             pending.getPos1(),
             pending.getPos2(),
             price,
-            System.currentTimeMillis()
+            System.currentTimeMillis(),
+            pending.getCaptureYaw(),
+            pending.getFrontFaceIndex()
         );
         
         activeShops.put(pending.getBlockLocation(), shop);
@@ -129,6 +133,8 @@ public class ShopManager {
         shopsConfig.set(key + ".signLocation", serializeLocation(shop.getSignLocation()));
         shopsConfig.set(key + ".pos1", serializeLocation(shop.getPos1()));
         shopsConfig.set(key + ".pos2", serializeLocation(shop.getPos2()));
+        shopsConfig.set(key + ".captureYaw", shop.getCaptureYaw());
+        shopsConfig.set(key + ".frontFaceIndex", shop.getFrontFaceIndex());
         
         try {
             shopsConfig.save(shopsFile);

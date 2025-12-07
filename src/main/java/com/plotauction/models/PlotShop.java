@@ -14,10 +14,12 @@ public class PlotShop {
     private final Location pos2;
     private final double price;
     private final long createdTime;
+    private final float captureYaw;
+    private final int frontFaceIndex;
     
     public PlotShop(UUID shopId, UUID ownerUUID, String plotName, 
                     Location signLocation, Location pos1, Location pos2, 
-                    double price, long createdTime) {
+                    double price, long createdTime, float captureYaw, int frontFaceIndex) {
         this.shopId = shopId;
         this.ownerUUID = ownerUUID;
         this.plotName = plotName;
@@ -26,6 +28,8 @@ public class PlotShop {
         this.pos2 = pos2;
         this.price = price;
         this.createdTime = createdTime;
+        this.captureYaw = captureYaw;
+        this.frontFaceIndex = frontFaceIndex;
     }
     
     public UUID getShopId() {
@@ -58,5 +62,13 @@ public class PlotShop {
     
     public long getCreatedTime() {
         return createdTime;
+    }
+    
+    public float getCaptureYaw() {
+        return captureYaw;
+    }
+    
+    public int getFrontFaceIndex() {
+        return frontFaceIndex;
     }
 }

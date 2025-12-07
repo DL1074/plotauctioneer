@@ -12,13 +12,17 @@ public class PendingShop {
     private final String plotName;
     private Location blockLocation;
     private final long createdTime;
+    private final float captureYaw;
+    private final int frontFaceIndex;
     
-    public PendingShop(UUID playerUUID, Location pos1, Location pos2, String plotName) {
+    public PendingShop(UUID playerUUID, Location pos1, Location pos2, String plotName, float captureYaw, int frontFaceIndex) {
         this.playerUUID = playerUUID;
         this.pos1 = pos1;
         this.pos2 = pos2;
         this.plotName = plotName;
         this.createdTime = System.currentTimeMillis();
+        this.captureYaw = captureYaw;
+        this.frontFaceIndex = frontFaceIndex;
     }
     
     public UUID getPlayerUUID() {
@@ -51,5 +55,13 @@ public class PendingShop {
     
     public long getCreatedTime() {
         return createdTime;
+    }
+    
+    public float getCaptureYaw() {
+        return captureYaw;
+    }
+    
+    public int getFrontFaceIndex() {
+        return frontFaceIndex;
     }
 }

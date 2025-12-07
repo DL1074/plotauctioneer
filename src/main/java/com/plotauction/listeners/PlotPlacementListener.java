@@ -67,7 +67,7 @@ public class PlotPlacementListener implements Listener {
         }
         
         // Debug: Show front face index
-        player.sendMessage("§7[Debug] Front Face Index: §e" + plotData.getFrontFaceIndex());
+        //player.sendMessage("§7[Debug] Front Face Index: §e" + plotData.getFrontFaceIndex());
         
         PlotPreview preview = new PlotPreview(
             player.getUniqueId(),

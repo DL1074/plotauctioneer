@@ -55,7 +55,11 @@ public class ShopCommand implements CommandExecutor {
             Location pos1 = selection.getPos1();
             Location pos2 = selection.getPos2();
             
-            plugin.getShopManager().createPendingShop(player.getUniqueId(), pos1, pos2, plotName);
+            // Calculate front face from player's yaw
+            float captureYaw = player.getLocation().getYaw();
+            int frontFaceIndex = com.plotauction.models.PlotData.calculateFrontFaceFromYaw(captureYaw);
+            
+            plugin.getShopManager().createPendingShop(player.getUniqueId(), pos1, pos2, plotName, captureYaw, frontFaceIndex);
             ItemStack shopBlock = plugin.getShopManager().createShopBlock();
             player.getInventory().addItem(shopBlock);
             

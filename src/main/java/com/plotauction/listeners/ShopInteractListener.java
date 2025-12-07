@@ -123,8 +123,8 @@ public class ShopInteractListener implements Listener {
                 blockCount,
                 System.currentTimeMillis(),
                 shop.getPlotName(),
-                0.0f, // Default yaw for shop purchases
-                0 // Default front face (north) for shop purchases
+                shop.getCaptureYaw(),
+                shop.getFrontFaceIndex()
             );
             
             ItemStack plotItem = plugin.getItemManager().createPlotItem(plotData);

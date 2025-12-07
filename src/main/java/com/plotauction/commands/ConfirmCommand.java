@@ -89,7 +89,7 @@ public class ConfirmCommand implements CommandExecutor {
             int frontFaceIndex = PlotData.calculateFrontFaceFromYaw(captureYaw);
             
             // Debug: Show calculated values
-            player.sendMessage("§7[Debug] Yaw: §e" + captureYaw + "§7, Front Face: §e" + frontFaceIndex);
+            //player.sendMessage("§7[Debug] Yaw: §e" + captureYaw + "§7, Front Face: §e" + frontFaceIndex);
             
             PlotData plotData = new PlotData(
                 schematicId,
