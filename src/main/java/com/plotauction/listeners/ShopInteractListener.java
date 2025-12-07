@@ -138,16 +138,16 @@ public class ShopInteractListener implements Listener {
             plugin.getShopManager().removeShop(shop.getSignLocation());
             shop.getSignLocation().getBlock().setType(Material.AIR);
             
-            player.sendMessage(plugin.getConfigManager().getPrefix() + 
-                "&aPurchased plot for " + plugin.getEconomyManager().format(shop.getPrice()) + "!");
-            player.sendMessage(plugin.getConfigManager().getPrefix() + 
-                "&7The build has been packaged into an item!");
+            player.sendMessage(plugin.getConfigManager().formatMessage(
+                "&aPurchased plot for " + plugin.getEconomyManager().format(shop.getPrice()) + "!"));
+            player.sendMessage(plugin.getConfigManager().formatMessage(
+                "&7The build has been packaged into an item!"));
             
             if (seller.isOnline()) {
                 Player sellerPlayer = seller.getPlayer();
-                sellerPlayer.sendMessage(plugin.getConfigManager().getPrefix() + 
+                sellerPlayer.sendMessage(plugin.getConfigManager().formatMessage(
                     "&a" + player.getName() + " purchased your plot '" + shop.getPlotName() + "' for " + 
-                    plugin.getEconomyManager().format(shop.getPrice()) + "!");
+                    plugin.getEconomyManager().format(shop.getPrice()) + "!"));
             }
             
         } catch (Exception e) {

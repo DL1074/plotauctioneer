@@ -45,10 +45,10 @@ public class ShopPriceListener implements Listener {
         plugin.getServer().getScheduler().runTask(plugin, () -> {
             plugin.getShopManager().finalizePendingShop(player.getUniqueId(), price);
             
-            player.sendMessage(plugin.getConfigManager().getPrefix() + 
-                "&aPlot shop created for " + plugin.getEconomyManager().format(price) + "!");
-            player.sendMessage(plugin.getConfigManager().getPrefix() + 
-                "&7Players can now browse and purchase your build!");
+            player.sendMessage(plugin.getConfigManager().formatMessage(
+                "&aPlot shop created for " + plugin.getEconomyManager().format(price) + "!"));
+            player.sendMessage(plugin.getConfigManager().formatMessage(
+                "&7Players can now browse and purchase your build!"));
         });
     }
 }
