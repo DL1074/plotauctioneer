@@ -126,20 +126,22 @@ public class PlotPreview {
         float normalizedYaw = ((captureYaw % 360) + 360) % 360;
         
         // Minecraft yaw: South=0°, West=90°, North=180°, East=270°
-        // Front face is OPPOSITE of where player faced (the side closest to player)
+        // Front face is the same direction as where player faced (the side closest to player)
+        // Since corners rotate with the building, we need to adjust face index by rotation
         int baseFace;
         if (normalizedYaw >= 315 || normalizedYaw < 45) {
-            baseFace = 0; // Player faced south (Z+), front is north (Z-)
+            baseFace = 2; // Player faced south (Z+), front is south (Z+)
         } else if (normalizedYaw >= 45 && normalizedYaw < 135) {
-            baseFace = 3; // Player faced west (X-), front is east (X+) 
+            baseFace = 1; // Player faced west (X-), front is west (X-)
         } else if (normalizedYaw >= 135 && normalizedYaw < 225) {
-            baseFace = 2; // Player faced north (Z-), front is south (Z+)
+            baseFace = 0; // Player faced north (Z-), front is north (Z-)
         } else {
-            baseFace = 1; // Player faced east (X+), front is west (X-)
+            baseFace = 3; // Player faced east (X+), front is east (X+)
         }
         
-        // Apply rotation (each 90° rotation shifts the face index)
-        int rotationSteps = rotation / 90;
-        return (baseFace + rotationSteps) % 4;
+        // Don't adjust for rotation - the corners themselves rotate via rotatePoint()
+        // We want to mark the same corner set (e.g., always corners 0-1-5-4)
+        // which will be at different world positions after rotation
+        return baseFace;
     }
 }
