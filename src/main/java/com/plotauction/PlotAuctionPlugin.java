@@ -91,6 +91,7 @@ public class PlotAuctionPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new com.plotauction.listeners.ShopInteractListener(this), this);
         getServer().getPluginManager().registerEvents(new com.plotauction.listeners.ShopBlockPlaceListener(this), this);
         getServer().getPluginManager().registerEvents(new com.plotauction.listeners.ShopPriceListener(this), this);
+        getServer().getPluginManager().registerEvents(new com.plotauction.listeners.PlayerDisconnectListener(this), this);
     }
     
     public static PlotAuctionPlugin getInstance() {

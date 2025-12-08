@@ -6,6 +6,7 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Particle.DustOptions;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
@@ -199,8 +200,11 @@ public class PreviewManager {
             public void run() {
                 if (activePreviews.containsKey(playerUUID)) {
                     cancelPreview(playerUUID);
-                    plugin.getServer().getPlayer(playerUUID).sendMessage(
-                        plugin.getConfigManager().formatMessage("&cPreview timed out!"));
+                    Player player = plugin.getServer().getPlayer(playerUUID);
+                    if (player != null && player.isOnline()) {
+                        player.sendMessage(
+                            plugin.getConfigManager().formatMessage("&cPreview timed out!"));
+                    }
                 }
             }
         }.runTaskLater(plugin, 60 * 20L); // 60 seconds
