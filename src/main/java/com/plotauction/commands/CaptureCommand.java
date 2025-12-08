@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -18,6 +19,26 @@ public class CaptureCommand implements CommandExecutor {
     
     public CaptureCommand(PlotAuctionPlugin plugin) {
         this.plugin = plugin;
+    }
+    
+    private void removeSelectionAxe(Player player) {
+        ItemStack[] contents = player.getInventory().getContents();
+        for (int i = 0; i < contents.length; i++) {
+            ItemStack item = contents[i];
+            if (item != null && item.getType() == Material.WOODEN_AXE) {
+                ItemMeta meta = item.getItemMeta();
+                if (meta != null && meta.hasDisplayName()) {
+                    Component displayName = meta.displayName();
+                    if (displayName != null) {
+                        String plainText = net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText().serialize(displayName);
+                        if (plainText.equals("Plot Selection Tool")) {
+                            player.getInventory().setItem(i, null);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
     
     @Override
@@ -54,6 +75,21 @@ public class CaptureCommand implements CommandExecutor {
         
         player.getInventory().addItem(axe);
         player.sendMessage(plugin.getConfigManager().getFormattedMessage("capture_start"));
+        
+        // Schedule axe removal after 55 seconds (5 seconds before cooldown ends)
+        // This prevents duplicate axes if player runs /plotcapture again
+        int cooldownSeconds = plugin.getConfigManager().getCooldownSeconds();
+        long removalDelay = Math.max(0, (cooldownSeconds - 5)) * 20L; // Convert to ticks
+        
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                // Only remove if player still has the axe and hasn't confirmed yet
+                if (player.isOnline() && plugin.getSelectionManager().hasSelection(player)) {
+                    removeSelectionAxe(player);
+                }
+            }
+        }.runTaskLater(plugin, removalDelay);
         
         return true;
     }
