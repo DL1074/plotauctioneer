@@ -3,7 +3,7 @@ version: '${project.version}'
 main: com.plotauction.PlotAuctionPlugin
 api-version: '1.20'
 depend: [FastAsyncWorldEdit]
-softdepend: [Vault]
+softdepend: [Vault, LuckPerms]
 author: David
 description: Tradeable building system for Minecraft
 

@@ -34,7 +34,7 @@ public class ShopCommand implements CommandExecutor {
         }
         
         if (args[0].equalsIgnoreCase("create")) {
-            if (!player.hasPermission("plotauction.shop.create")) {
+            if (!plugin.getPermissionManager().hasPermission(player, "shop.create")) {
                 player.sendMessage(plugin.getConfigManager().getFormattedMessage("no_permission"));
                 return true;
             }

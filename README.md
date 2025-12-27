@@ -10,9 +10,10 @@ A Minecraft plugin that allows players to package their builds into tradeable it
 - **Preview Mode**: See particle outline before placing builds
 - **Economy Integration**: Full Vault support for transactions
 - **Land Claim Integration**: Works with HuskClaims and WorldGuard
+- **LuckPerms Integration**: Full LuckPerms support with configurable permission nodes
 - **Async Operations**: Uses FastAsyncWorldEdit for lag-free operations
 - **Customizable**: Extensive configuration options
-- **Permission System**: Granular permission control
+- **Permission System**: Granular permission control with LuckPerms support
 - **Size Limits**: Configurable volume and dimension restrictions
 - **Blacklist System**: Prevent capturing certain blocks or in certain worlds
 - **Cooldown System**: Prevent spam with configurable cooldowns
@@ -24,6 +25,7 @@ A Minecraft plugin that allows players to package their builds into tradeable it
 - **Dependencies**: 
   - FastAsyncWorldEdit (FAWE) - Required
   - Vault - Optional (required for shop system)
+  - LuckPerms - Optional (for advanced permission management)
   - Economy Plugin - Optional (e.g., EssentialsX, for shop system)
   - HuskClaims - Optional (for land claim protection)
   - WorldGuard - Optional (for region protection)
@@ -245,6 +247,7 @@ This project is licensed under the MIT License.
 ## 📚 Additional Documentation
 
 - **[QUICKSTART.md](QUICKSTART.md)** - Quick start guide for setup and configuration
+- **[LUCKPERMS_INTEGRATION.md](LUCKPERMS_INTEGRATION.md)** - Complete guide for LuckPerms integration
 
 ## 💬 Support
 

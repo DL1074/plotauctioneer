@@ -50,7 +50,7 @@ public class CaptureCommand implements CommandExecutor {
         
         Player player = (Player) sender;
         
-        if (!player.hasPermission("plotauction.capture")) {
+        if (!plugin.getPermissionManager().hasPermission(player, "capture")) {
             player.sendMessage(plugin.getConfigManager().getFormattedMessage("no_permission"));
             return true;
         }

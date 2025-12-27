@@ -31,7 +31,7 @@ public class CancelCommand implements CommandExecutor {
         }
         
         // Otherwise, check for selection (plot capture)
-        if (!player.hasPermission("plotauction.capture")) {
+        if (!plugin.getPermissionManager().hasPermission(player, "capture")) {
             player.sendMessage(plugin.getConfigManager().getFormattedMessage("no_permission"));
             return true;
         }

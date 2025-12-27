@@ -213,12 +213,9 @@ public class ClaimManager {
             Method adaptLocationMethod = bukkitAdapterClass.getMethod("adapt", Location.class);
             Object weLocation = adaptLocationMethod.invoke(null, location);
             
-            // Check if player can build
-            Class<?> localPlayerClass = Class.forName("com.sk89q.worldedit.bukkit.BukkitPlayer");
-            Object localPlayer = localPlayerClass.getConstructor(
-                Class.forName("com.sk89q.worldedit.bukkit.BukkitAdapter"),
-                Player.class
-            ).newInstance(null, player);
+            // Convert Bukkit player to WorldEdit player using BukkitAdapter
+            Method adaptPlayerMethod = bukkitAdapterClass.getMethod("adapt", Player.class);
+            Object localPlayer = adaptPlayerMethod.invoke(null, player);
             
             Class<?> regionQueryClass = Class.forName("com.sk89q.worldguard.protection.regions.RegionQuery");
             Method testBuildMethod = regionQueryClass.getMethod("testBuild",
@@ -241,7 +238,8 @@ public class ClaimManager {
         } catch (Exception e) {
             plugin.getLogger().warning("Error checking WorldGuard: " + e.getMessage());
             e.printStackTrace();
-            return new ClaimCheckResult(true, null); // Allow on error
+            // DENY on error to prevent bypassing claim protection
+            return new ClaimCheckResult(false, plugin.getConfigManager().translateColorCodes("&cClaim check failed - please contact an administrator"));
         }
     }
     

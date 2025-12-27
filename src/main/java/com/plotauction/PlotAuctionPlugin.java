@@ -13,6 +13,7 @@ public class PlotAuctionPlugin extends JavaPlugin {
     private static PlotAuctionPlugin instance;
     
     private ConfigManager configManager;
+    private PermissionManager permissionManager;
     private SelectionManager selectionManager;
     private SchematicManager schematicManager;
     private ItemManager itemManager;
@@ -40,6 +41,7 @@ public class PlotAuctionPlugin extends JavaPlugin {
         configManager = new ConfigManager(this);
         configManager.loadConfig();
         
+        permissionManager = new PermissionManager(this);
         selectionManager = new SelectionManager(this);
         schematicManager = new SchematicManager(this);
         itemManager = new ItemManager(this);
@@ -128,5 +130,9 @@ public class PlotAuctionPlugin extends JavaPlugin {
     
     public EconomyManager getEconomyManager() {
         return economyManager;
+    }
+    
+    public PermissionManager getPermissionManager() {
+        return permissionManager;
     }
 }

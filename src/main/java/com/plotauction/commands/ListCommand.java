@@ -23,7 +23,7 @@ public class ListCommand implements CommandExecutor {
         
         Player player = (Player) sender;
         
-        if (!player.hasPermission("plotauction.list")) {
+        if (!plugin.getPermissionManager().hasPermission(player, "list")) {
             player.sendMessage(plugin.getConfigManager().getFormattedMessage("no_permission"));
             return true;
         }

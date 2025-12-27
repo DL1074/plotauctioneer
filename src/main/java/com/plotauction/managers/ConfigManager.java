@@ -157,6 +157,14 @@ public class ConfigManager {
         return config.getBoolean("integration.vault", true);
     }
     
+    public boolean isLuckPermsEnabled() {
+        return config.getBoolean("integration.luckperms", true);
+    }
+    
+    public String getPermissionNode(String key) {
+        return config.getString("permissions." + key, "plotauction." + key);
+    }
+    
     // Restrictions
     public List<Material> getBlacklistedBlocks() {
         return config.getStringList("restrictions.blacklisted_blocks").stream()

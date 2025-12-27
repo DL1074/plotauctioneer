@@ -35,7 +35,7 @@ public class ConfirmCommand implements CommandExecutor {
         }
         
         // Otherwise, check for selection (plot capture)
-        if (!player.hasPermission("plotauction.capture")) {
+        if (!plugin.getPermissionManager().hasPermission(player, "capture")) {
             player.sendMessage(plugin.getConfigManager().getFormattedMessage("no_permission"));
             return true;
         }
@@ -57,7 +57,7 @@ public class ConfirmCommand implements CommandExecutor {
         int maxVolume = plugin.getConfigManager().getMaxVolume();
         int minVolume = plugin.getConfigManager().getMinVolume();
         
-        if (volume > maxVolume && !player.hasPermission("plotauction.bypass.size")) {
+        if (volume > maxVolume && !plugin.getPermissionManager().hasPermission(player, "bypass.size")) {
             player.sendMessage(plugin.getConfigManager().getFormattedMessage("too_large", 
                 "max", String.valueOf(maxVolume)));
             return true;
@@ -73,6 +73,24 @@ public class ConfirmCommand implements CommandExecutor {
         if (plugin.getSchematicManager().containsBlacklistedBlocks(selection)) {
             player.sendMessage(plugin.getConfigManager().getFormattedMessage("blacklisted_blocks"));
             return true;
+        }
+        
+        // Check claim ownership if required
+        boolean ownershipRequired = plugin.getConfigManager().isOwnershipRequired();
+        plugin.getLogger().info("[DEBUG] Ownership required: " + ownershipRequired);
+        plugin.getLogger().info("[DEBUG] Claim plugins enabled: " + plugin.getClaimManager().isAnyClaimPluginEnabled());
+        
+        if (ownershipRequired) {
+            com.plotauction.managers.ClaimManager.ClaimCheckResult claimResult = 
+                plugin.getClaimManager().canBuildInRegion(player, selection.getPos1(), selection.getPos2());
+            
+            plugin.getLogger().info("[DEBUG] Claim check result for " + player.getName() + ": allowed=" + claimResult.isAllowed());
+            
+            if (!claimResult.isAllowed()) {
+                player.sendMessage(plugin.getConfigManager().getPrefix() + claimResult.getMessage());
+                player.sendMessage(plugin.getConfigManager().formatMessage("&7You can only capture builds in areas you own!"));
+                return true;
+            }
         }
         
         // Capture and save schematic

@@ -25,7 +25,7 @@ public class InfoCommand implements CommandExecutor {
         
         Player player = (Player) sender;
         
-        if (!player.hasPermission("plotauction.info")) {
+        if (!plugin.getPermissionManager().hasPermission(player, "info")) {
             player.sendMessage(plugin.getConfigManager().getFormattedMessage("no_permission"));
             return true;
         }

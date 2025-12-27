@@ -15,9 +15,17 @@ public class AdminCommand implements CommandExecutor {
     
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!sender.hasPermission("plotauction.admin")) {
-            sender.sendMessage(plugin.getConfigManager().getFormattedMessage("no_permission"));
-            return true;
+        if (sender instanceof org.bukkit.entity.Player) {
+            org.bukkit.entity.Player player = (org.bukkit.entity.Player) sender;
+            if (!plugin.getPermissionManager().hasPermission(player, "admin")) {
+                sender.sendMessage(plugin.getConfigManager().getFormattedMessage("no_permission"));
+                return true;
+            }
+        } else {
+            if (!sender.hasPermission("plotauction.admin")) {
+                sender.sendMessage(plugin.getConfigManager().getFormattedMessage("no_permission"));
+                return true;
+            }
         }
         
         if (args.length == 0) {
@@ -28,6 +36,7 @@ public class AdminCommand implements CommandExecutor {
         
         if (args[0].equalsIgnoreCase("reload")) {
             plugin.getConfigManager().reloadConfig();
+            plugin.getPermissionManager().reload();
             sender.sendMessage(plugin.getConfigManager().getPrefix() + plugin.getConfigManager().translateColorCodes("&aConfiguration reloaded!"));
             return true;
         }

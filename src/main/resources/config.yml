@@ -56,6 +56,25 @@ shop:
 integration:
   worldguard: false
   vault: true
+  luckperms: true
+
+# Permission Nodes (Customizable for LuckPerms)
+permissions:
+  capture: "plotauction.capture"
+  place: "plotauction.place"
+  info: "plotauction.info"
+  list: "plotauction.list"
+  trade: "plotauction.trade"
+  shop: "plotauction.shop"
+  shop.create: "plotauction.shop.create"
+  shop.remove: "plotauction.shop.remove"
+  shop.list: "plotauction.shop.list"
+  shop.info: "plotauction.shop.info"
+  shop.remove.others: "plotauction.shop.remove.others"
+  shop.break.others: "plotauction.shop.break.others"
+  admin: "plotauction.admin"
+  bypass.size: "plotauction.bypass.size"
+  bypass.region: "plotauction.bypass.region"
   
 # Restrictions
 restrictions:
